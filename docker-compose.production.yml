@@ -14,7 +14,7 @@ services:
     restart: always
 
   backend:
-    image: ${semchik}/kittygram_backend:latest
+    image: semchik/kittygram_backend:latest
     env_file: .env
     depends_on:
       - db
@@ -24,7 +24,7 @@ services:
     restart: always
 
   frontend:
-    image: ${semchik}/kittygram_frontend:latest
+    image: semchik/kittygram_frontend:latest
     env_file: .env
     command: cp -r /app/build/. /static/
     volumes:
@@ -32,7 +32,7 @@ services:
     restart: always
 
   gateway:
-    image: ${semchik}/kittygram_gateway:latest
+    image: semchik/kittygram_gateway:latest
     env_file: .env
     ports:
       - 9000:80
