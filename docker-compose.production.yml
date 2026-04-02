@@ -11,25 +11,32 @@ services:
     env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
+    restart: always
 
   backend:
-    build: ./backend/
+    image: ${semchik}/kittygram_backend:latest
     env_file: .env
     depends_on:
       - db
     volumes:
       - static:/backend_static/static
       - media:/app/media
+    restart: always
 
   frontend:
+    image: ${semchik}/kittygram_frontend:latest
     env_file: .env
-    build: ./frontend/
+    command: cp -r /app/build/. /static/
+    volumes:
+      - static:/static
+    restart: always
 
   gateway:
-    build: ./nginx/
+    image: ${semchik}/kittygram_gateway:latest
     env_file: .env
     ports:
       - 9000:80
     volumes:
       - static:/static
       - media:/media
+    restart: always
